@@ -1,0 +1,2 @@
+defmodule Hemingway do
+end
