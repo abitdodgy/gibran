@@ -39,8 +39,14 @@ defmodule Hemingway.Counter do
     String.length(string)
   end
 
-  @doc """
+  @doc ~S"""
   Splits a string into a list of tokens using a given regular expression.
+
+  ## Examples
+
+      iex> Hemingway.Counter.tokens("We are all in the gutter, but some of us are looking at the stars.")
+      ["We", "are", "all", "in", "the", "gutter", "but", "some", "of", "us", "are", "looking", "at", "the", "stars"]
+
   """
   def tokens(string, pattern \\ @token_regexp) do
     String.split(string, pattern, trim: true)
