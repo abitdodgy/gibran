@@ -21,4 +21,18 @@ defmodule Hemingway.Counter do
   def tokens(string, pattern \\ @token_regexp) do
     String.split(string, pattern, trim: true)
   end
+
+  @doc """
+  Returns a list of unique tokens from a string given a regular expression.
+  """
+  def unique_tokens(string, pattern \\ @token_regexp) do
+    Enum.uniq tokens(string, pattern)
+  end
+
+  @doc """
+  Counts the number of unique tokens in a string.
+  """
+  def unique_token_count(string, pattern \\ @token_regexp) do
+    length unique_tokens(string, pattern)
+  end
 end

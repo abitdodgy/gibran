@@ -9,7 +9,15 @@ defmodule Hemingway.CounterTest do
     assert Hemingway.Counter.char_count("There was a star danced") == 23
   end
 
-  test "tokenize returns a list of tokesn from a string" do
+  test "tokens returns a list of tokens from a string" do
     assert Hemingway.Counter.tokens("There was a star danced") == ["There", "was", "a", "star", "danced"]
+  end
+
+  test "unique_tokens returns a list of unique tokens from a string" do
+    assert Hemingway.Counter.unique_tokens("hi bye hi bye") == ["hi", "bye"]
+  end
+
+  test "unique_token_count counts unique tokens in a string" do
+    assert Hemingway.Counter.unique_token_count("hi bye hi bye") == 2
   end
 end
