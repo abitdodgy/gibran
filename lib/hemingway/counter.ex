@@ -1,15 +1,39 @@
 defmodule Hemingway.Counter do
-  @token_regexp ~r/\s+/u
+  @token_regexp ~r/[^\p{L}'-]/u # Missing dash and apostrophe
 
-  @doc """
+  @doc ~S"""
   Counts the number of tokens in a string.
+
+  ## Examples
+
+      iex> Hemingway.Counter.count("True friends stab you in the front.")
+      7
+
+      iex> Hemingway.Counter.count("If you are not too long, I will wait here for you all my life.")
+      15
+
+  Tokens with apostrophes are considered a single word.
+
+      iex> Hemingway.Counter.count("Experience is one thing you can't get for nothing.")
+      9
+
+  So are compound words.
+
+      iex> Hemingway.Counter.count("It is only the modern that ever becomes old-fashioned.")
+      9
   """
   def count(string, pattern \\ @token_regexp) do
     length tokens(string, pattern)
   end
 
-  @doc """
-  Counts the number of chars in a string.
+  @doc ~S"""
+  Counts the number of characters in a string.
+
+  ## Examples
+
+      iex> Hemingway.Counter.char_count("It is better to have a permanent income than to be fascinating.")
+      63
+
   """
   def char_count(string) do
     String.length(string)

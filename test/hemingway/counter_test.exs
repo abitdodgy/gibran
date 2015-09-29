@@ -1,5 +1,6 @@
 defmodule Hemingway.CounterTest do
   use ExUnit.Case, async: true
+  doctest Hemingway.Counter
 
   test "counts tokens in a string" do
     assert Hemingway.Counter.count("There was a star danced") == 5
