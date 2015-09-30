@@ -28,7 +28,7 @@ defmodule Oscar.Counter do
       10
   """
   def count(string, pattern \\ @token_regexp) do
-    length tokens(string, pattern)
+    tokens(string, pattern) |> length
   end
 
   @doc ~S"""
@@ -82,7 +82,7 @@ defmodule Oscar.Counter do
       ["Good", "people", "exasperate", "one", "s", "reason", "bad", "stir", "imagination"]
   """
   def unique_tokens(string, pattern \\ @token_regexp) do
-    Enum.uniq tokens(string, pattern)
+    tokens(string, pattern) |> Enum.uniq
   end
 
   @doc ~S"""
@@ -100,6 +100,6 @@ defmodule Oscar.Counter do
       9
   """
   def unique_token_count(string, pattern \\ @token_regexp) do
-    length unique_tokens(string, pattern)
+    unique_tokens(string, pattern) |> length
   end
 end
