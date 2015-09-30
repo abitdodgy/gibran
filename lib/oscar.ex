@@ -1,0 +1,2 @@
+defmodule Oscar do
+end
