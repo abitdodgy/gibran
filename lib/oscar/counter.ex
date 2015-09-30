@@ -1,5 +1,5 @@
 defmodule Oscar.Counter do
-  @token_regexp ~r/[^\p{L}'-]/u # Missing dash and apostrophe
+  @token_regexp ~r/[^\p{L}'-]/u
 
   @doc ~S"""
   Counts the number of tokens in a string.
