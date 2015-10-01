@@ -1,50 +1,12 @@
 defmodule Oscar.Counter do
+  @moduledoc """
+  A set of functions for analysing strings.
+  """
+
   @token_regexp ~r/[^\p{L}'-]/u
 
   @doc ~S"""
-  Counts the number of tokens in a string.
-
-  ## Examples
-
-      iex> Oscar.Counter.count("True friends stab you in the front.")
-      7
-
-      iex> Oscar.Counter.count("If you are not too long, I will wait here for you all my life.")
-      15
-
-  Tokens with apostrophes are considered a single word.
-
-      iex> Oscar.Counter.count("Experience is one thing you can't get for nothing.")
-      9
-
-  So are compound words.
-
-      iex> Oscar.Counter.count("It is only the modern that ever becomes old-fashioned.")
-      9
-
-  It accepts a custom regular expression.
-
-      iex> Oscar.Counter.count("It is only the modern that ever becomes old-fashioned.", ~r/[^\p{L}]/)
-      10
-  """
-  def count(string, pattern \\ @token_regexp) do
-    tokens(string, pattern) |> length
-  end
-
-  @doc ~S"""
-  Counts the number of characters in a string.
-
-  ## Examples
-
-      iex> Oscar.Counter.char_count("It is better to have a permanent income than to be fascinating.")
-      63
-  """
-  def char_count(string) do
-    String.length(string)
-  end
-
-  @doc ~S"""
-  Splits a string into a list of tokens using a given regular expression.
+  Splits a string into a list of tokens using a given regular expression that defaults to `@token_regexp`.
 
   ## Examples
 
@@ -59,47 +21,143 @@ defmodule Oscar.Counter do
       iex> Oscar.Counter.tokens("The man who can dominate a London dinner-table can dominate the world.")
       ["The", "man", "who", "can", "dominate", "a", "London", "dinner-table", "can", "dominate", "the", "world"]
 
-  It accepts a regular expression.
+  It accepts a `:pattern` regular expression option used to tokenise the string.
 
-      iex> Oscar.Counter.tokens("The man who can dominate a London dinner-table can dominate the world.", ~r/[^\p{L}]/)
+      iex> Oscar.Counter.tokens("The man who can dominate a London dinner-table can dominate the world.", pattern: ~r/[^\p{L}]/)
       ["The", "man", "who", "can", "dominate", "a", "London", "dinner", "table", "can", "dominate", "the", "world"]
+
+  It accepts an `:exclude` option. `:exclude` can be a function, a list, a string, or a regular expression. The expression
+  is applied to the string after its tokenised.
+
+      iex> Oscar.Counter.tokens("It is only the modern that ever becomes old-fashioned.", exclude: &(String.length(&1) > 3))
+      ["It", "is", "the"]
+
+      iex> Oscar.Counter.tokens("It is only the modern that ever becomes old-fashioned.", exclude: ~r/old-fashioned/)
+      ["It", "is", "only", "the", "modern", "that", "ever", "becomes"]
+
+      iex> Oscar.Counter.tokens("It is only the modern that ever becomes old-fashioned.", exclude: "It is only that")
+      ["the", "modern", "ever", "becomes", "old-fashioned"]
+
+      iex> Oscar.Counter.tokens("It is only the modern that ever becomes old-fashioned.", exclude: ["It", "is", "only", "that", "ever"])
+      ["the", "modern", "becomes", "old-fashioned"]
   """
-  def tokens(string, pattern \\ @token_regexp) do
-    String.split(string, pattern, trim: true)
+  def tokens(input, opts \\ []) do
+    pattern = Keyword.get(opts, :pattern, @token_regexp)
+    exclude = Keyword.get(opts, :exclude)
+
+    String.split(input, pattern, trim: true) |> reject(exclude)
   end
 
   @doc ~S"""
-  Returns a list of unique tokens from a string given a regular expression.
+  Returns a list of unique tokens from a string.
 
   ## Examples
 
       iex> Oscar.Counter.unique_tokens("Good people exasperate one's reason; bad people stir one's imagination.")
       ["Good", "people", "exasperate", "one's", "reason", "bad", "stir", "imagination"]
 
-  It accepts a regular expression.
-
-      iex> Oscar.Counter.unique_tokens("Good people exasperate one's reason; bad people stir one's imagination.", ~r/[^\p{L}]/)
-      ["Good", "people", "exasperate", "one", "s", "reason", "bad", "stir", "imagination"]
+  It accepts `:pattern` and `:exclude` options, and uses `@token_regexp` to tokenize the string unless one is provided.
+  See `Oscar.Counter.tokens/2`.
   """
-  def unique_tokens(string, pattern \\ @token_regexp) do
-    tokens(string, pattern) |> Enum.uniq
+  def unique_tokens(string, opts \\ []) do
+    tokens(string, opts) |> Enum.uniq
   end
 
   @doc ~S"""
-  Counts the number of unique tokens in a string given a regular expression.
+  Counts the number of tokens in a string.
 
   ## Examples
 
-      iex> Oscar.Counter.unique_token_count("Good people exasperate one's reason; bad people stir one's imagination.")
-      8
+      iex> Oscar.Counter.token_count("True friends stab you in the front.")
+      7
 
-  It accepts a regular expression.
-
-      iex> Oscar.Counter.unique_token_count("Good people exasperate one's reason; bad people stir one's imagination.", ~r/[^\p{L}]/)
-      ["Good", "people", "exasperate", "one", "s", "reason", "bad", "stir", "imagination"]
-      9
+  It accepts `:pattern` and `:exclude` options, and uses `@token_regexp` to tokenize the string unless one is provided.
+  See `Oscar.Counter.tokens/2`.
   """
-  def unique_token_count(string, pattern \\ @token_regexp) do
-    unique_tokens(string, pattern) |> length
+  def token_count(input, opts \\ []) do
+    tokens(input, opts) |> length
+  end
+
+  @doc ~S"""
+  Counts the number of unique tokens in a string.
+
+  ## Examples
+
+      iex> Oscar.Counter.uniq_token_count("If you are not too long, I will wait here for you all my life.")
+      14
+
+  It accepts `:pattern` and `:exclude` options, and uses `@token_regexp` to tokenize the string unless one is provided.
+  See `Oscar.Counter.tokens/2`.
+  """
+  def uniq_token_count(input, opts \\ []) do
+    unique_tokens(input, opts) |> length
+  end
+
+  @doc ~S"""
+  Counts the number of characters in a string.
+
+  ## Examples
+
+      iex> Oscar.Counter.char_count("It is better to have a permanent income than to be fascinating.")
+      63
+  """
+  def char_count(input), do: String.length(input)
+
+  @doc ~S"""
+  Returns average characters per token.
+
+  ## Examples
+
+      iex> Oscar.Counter.average_chars_per_token("If you are not too long, I will wait here for you all my life.")
+      3.07
+
+  It accepts a `:precision` option.
+
+      iex> Oscar.Counter.average_chars_per_token("If you are not too long, I will wait here for you all my life.", precision: 4)
+      3.0667
+
+  It accepts `:pattern` and `:exclude` options, and uses `@token_regexp` to tokenize the string unless one is provided.
+  See `Oscar.Counter.tokens/2`.
+  """
+  def average_chars_per_token(input, opts \\ []) do
+    precision = Keyword.get(opts, :precision, 2)
+    tokens = tokens(input, opts)
+
+    (tokens
+      |> List.to_string
+      |> String.length) / length(tokens) |> Float.round(precision)
+  end
+
+  @doc ~S"""
+  Returns a two-element tuple of the length, and a list of the longest tokens.
+
+  ## Examples
+
+      iex> Oscar.Counter.longest_tokens("If you are not too long, I will wait here for you all my life.")
+      {4, ["life", "here", "wait", "will", "long"]}
+
+  It accepts `:pattern` and `:exclude` options, and uses `@token_regexp` to tokenize the string unless one is provided.
+  See `Oscar.Counter.tokens/2`.
+  """
+  def longest_tokens(input, opts \\ []) do
+    tokens(input, opts) |> Enum.group_by(&String.length(&1)) |> Enum.max
+  end
+
+  @doc """
+  Applies a filter to the input after it is tokenised.
+  """
+  defp reject(list, filter) do
+    cond do
+      is_function(filter) ->
+        Enum.reject(list, filter)
+      Regex.regex?(filter) ->
+        Enum.reject list, &Regex.match?(filter, &1)
+      is_list(filter) ->
+        Enum.reject list, &Enum.member?(filter, &1)
+      is_binary(filter) ->
+        reject list, String.split(filter, " ", trim: true)
+      true ->
+        list
+    end
   end
 end
