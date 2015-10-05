@@ -9,7 +9,7 @@ defmodule Oscar.Tokeniser do
   Splits a string into a list of tokens with a regular expression. If a regular is not provided
   it defaults to `@token_regexp`.
 
-    iex> Oscar.Tokeniser.tokens("We are all in the gutter, but some of us are looking at the stars.")
+    iex> Oscar.Tokeniser.tokenise("We are all in the gutter, but some of us are looking at the stars.")
     [ "We", "are", "all", "in", "the", "gutter", "but",\
       "some", "of", "us", "are", "looking", "at", "the", "stars" ]
 
@@ -62,7 +62,7 @@ defmodule Oscar.Tokeniser do
     )
     ["the", "modern", "becomes", "old-fashioned"]
   """
-  def tokens(input, opts \\ []) do
+  def tokenise(input, opts \\ []) do
     pattern = Keyword.get(opts, :pattern, @token_regexp)
     exclude = Keyword.get(opts, :exclude)
 

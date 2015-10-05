@@ -4,14 +4,12 @@ defmodule Oscar.Counter do
   """
 
   @doc ~S"""
-  Given a list of tokens, returns a unique list.
+  Given a list of tokens, it returns a unique list.
 
   ## Examples
 
-    iex> Oscar.Counter.uniq_tokens(\
-      "Good people exasperate one's reason; bad people stir one's imagination."\
-    )
-    ["Good", "people", "exasperate", "one's", "reason", "bad", "stir", "imagination"]
+    iex> Oscar.Counter.uniq_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
+    ["the", "prophet", "eye", "of"]
   """
   def uniq_tokens(list), do: Enum.uniq(list)
 
@@ -20,8 +18,8 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.token_count("True friends stab you in the front.")
-    7
+    iex> Oscar.Counter.token_count(["the", "madman"])
+    2
   """
   def token_count(list), do: length(list)
 
@@ -30,10 +28,8 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.uniq_token_count(\
-      "If you are not too long, I will wait here for you all my life."\
-    )
-    14
+    iex> Oscar.Counter.uniq_token_count(["the", "prophet", "eye", "of", "the", "prophet"])
+    4
   """
   def uniq_token_count(list) do
     list |> uniq_tokens |> length
@@ -44,28 +40,22 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.char_count(\
-      "It is better to have a permanent income than to be fascinating."\
-    )
-    63
+    iex> Oscar.Counter.char_count(["the", "wanderer"])
+    11
   """
-  def char_count(list), do: Enum.reduce(list, &String.length(&1))
+  def char_count(list), do: Enum.reduce(list, 0, fn (token, acc) -> acc + String.length(token) end)
 
   @doc ~S"""
-  Returns average characters per token.
+  Returns a float of the average characters per token.
 
   ## Examples
 
-    iex> Oscar.Counter.average_chars_per_token(\
-      "If you are not too long, I will wait here for you all my life."\
-    )
-    3.07
+    iex> Oscar.Counter.average_chars_per_token(["twenty", "drawings"])
+    7.0
 
     iex> Oscar.Counter.average_chars_per_token(\
-      "If you are not too long, I will wait here for you all my life.",\
-      precision: 4\
-    )
-    3.0667
+      ["The", "Treasured", "Writings", "of", "Kahlil", "Gibran"], precision: 4)
+    5.6667
 
   ## Options
 
@@ -82,10 +72,8 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.token_lengths(\
-      "Be yourself; everyone else is already taken."\
-    )
-    #HashDict<[{"taken", 5}, {"yourself", 8}, {"already", 7}, {"is", 2}, {"Be", 2}, {"else", 4}, {"everyone", 8}]>
+    iex> Oscar.Counter.token_lengths(["voice", "and", "master"])
+    #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
   """
   def token_lengths(list) do
     list |> Enum.uniq |> Enum.reduce(HashDict.new, fn (token, dict) ->
@@ -99,10 +87,8 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.longest_tokens(\
-      "If you are not too long, I will wait here for you all my life."\
-    )
-    [{"here", 4}, {"will", 4}, {"long", 4}, {"wait", 4}, {"life", 4}]
+    iex> Oscar.Counter.longest_tokens(["kingdom", "of", "the", "imagination"])
+    [{"imagination", 11}]
   """
   def longest_tokens(list) do
     list |> token_lengths |> top_ranked
@@ -113,8 +99,8 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-  iex> Oscar.Counter.token_frequency("Oscar Oscar Oscar Fingal Fingal Wilde")
-  #HashDict<[{"Wilde", 1}, {"Fingal", 2}, {"Oscar", 3}]>
+    iex> Oscar.Counter.token_frequency(["the", "prophet", "eye", "of", "the", "prophet"])
+    #HashDict<[{"the", 2}, {"eye", 1}, {"of", 1}, {"prophet", 2}]>
   """
   def token_frequency(list) do
     list |> Enum.reduce(HashDict.new, fn (token, dict) ->
@@ -123,19 +109,18 @@ defmodule Oscar.Counter do
   end
 
   @doc ~S"""
-  Returns a list tokens with the highest frequency. Each token is a two-element tuple consisteing of
-  frequency and the token.
+  Returns a `List` of two-element tuples with the highest frequency. Each tuple consists of
+  the token and its frequency.
 
   ## Examples
 
-    iex> Oscar.Counter.most_frequent_tokens(\
-      "If you are not too long, I will wait here for you all, all my life."\
-    )
-    [{"you", 2}, {"all", 2}]
+    iex> Oscar.Counter.most_frequent_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
+    [{"prophet", 2}, {"the", 2}]
   """
   def most_frequent_tokens(list) do
     list |> token_frequency |> top_ranked
   end
+
 
   defp top_ranked(dict) do
     Enum.group_by(dict, fn {_, x} -> x end) |> Enum.max |> elem(1)
