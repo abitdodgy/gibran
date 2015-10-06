@@ -31,9 +31,7 @@ defmodule Oscar.Counter do
     iex> Oscar.Counter.uniq_token_count(["the", "prophet", "eye", "of", "the", "prophet"])
     4
   """
-  def uniq_token_count(list) do
-    list |> uniq_tokens |> length
-  end
+  def uniq_token_count(list), do: list |> uniq_tokens |> length
 
   @doc ~S"""
   Counts the number of characters in a list.
@@ -43,7 +41,11 @@ defmodule Oscar.Counter do
     iex> Oscar.Counter.char_count(["the", "wanderer"])
     11
   """
-  def char_count(list), do: Enum.reduce(list, 0, fn (token, acc) -> acc + String.length(token) end)
+  def char_count(list) do
+    Enum.reduce list, 0, fn (token, acc) ->
+      String.length(token) + acc
+    end
+  end
 
   @doc ~S"""
   Returns a float of the average characters per token.
@@ -76,9 +78,9 @@ defmodule Oscar.Counter do
     #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
   """
   def token_lengths(list) do
-    list |> Enum.uniq |> Enum.reduce(HashDict.new, fn (token, dict) ->
+    list |> Enum.uniq |> Enum.reduce HashDict.new, fn (token, dict) ->
       HashDict.put dict, token, String.length(token)
-    end)
+    end
   end
 
   @doc ~S"""
@@ -90,9 +92,7 @@ defmodule Oscar.Counter do
     iex> Oscar.Counter.longest_tokens(["kingdom", "of", "the", "imagination"])
     [{"imagination", 11}]
   """
-  def longest_tokens(list) do
-    list |> token_lengths |> top_ranked
-  end
+  def longest_tokens(list), do: list |> token_lengths |> top_ranked
 
   @doc ~S"""
   Returns a `HashDict` of tokens and the number of times they occur.
@@ -103,9 +103,9 @@ defmodule Oscar.Counter do
     #HashDict<[{"the", 2}, {"eye", 1}, {"of", 1}, {"prophet", 2}]>
   """
   def token_frequency(list) do
-    list |> Enum.reduce(HashDict.new, fn (token, dict) ->
+    list |> Enum.reduce HashDict.new, fn (token, dict) ->
       Dict.update dict, token, 1, &(&1 + 1)
-    end)
+    end
   end
 
   @doc ~S"""
@@ -117,9 +117,7 @@ defmodule Oscar.Counter do
     iex> Oscar.Counter.most_frequent_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
     [{"prophet", 2}, {"the", 2}]
   """
-  def most_frequent_tokens(list) do
-    list |> token_frequency |> top_ranked
-  end
+  def most_frequent_tokens(list), do: list |> token_frequency |> top_ranked
 
 
   defp top_ranked(dict) do
