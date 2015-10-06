@@ -1,4 +1,4 @@
-defmodule Oscar.Counter do
+defmodule Gibran.Counter do
   @moduledoc """
   A set of functions for analysing lists of tokens.
   """
@@ -8,7 +8,7 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.uniq_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
+    iex> Gibran.Counter.uniq_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
     ["the", "prophet", "eye", "of"]
   """
   def uniq_tokens(list), do: Enum.uniq(list)
@@ -18,7 +18,7 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.token_count(["the", "madman"])
+    iex> Gibran.Counter.token_count(["the", "madman"])
     2
   """
   def token_count(list), do: length(list)
@@ -28,7 +28,7 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.uniq_token_count(["the", "prophet", "eye", "of", "the", "prophet"])
+    iex> Gibran.Counter.uniq_token_count(["the", "prophet", "eye", "of", "the", "prophet"])
     4
   """
   def uniq_token_count(list), do: list |> uniq_tokens |> length
@@ -38,7 +38,7 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.char_count(["the", "wanderer"])
+    iex> Gibran.Counter.char_count(["the", "wanderer"])
     11
   """
   def char_count(list) do
@@ -52,10 +52,10 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.average_chars_per_token(["twenty", "drawings"])
+    iex> Gibran.Counter.average_chars_per_token(["twenty", "drawings"])
     7.0
 
-    iex> Oscar.Counter.average_chars_per_token(\
+    iex> Gibran.Counter.average_chars_per_token(\
       ["The", "Treasured", "Writings", "of", "Kahlil", "Gibran"], precision: 4)
     5.6667
 
@@ -74,7 +74,7 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.token_lengths(["voice", "and", "master"])
+    iex> Gibran.Counter.token_lengths(["voice", "and", "master"])
     #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
   """
   def token_lengths(list) do
@@ -89,7 +89,7 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.longest_tokens(["kingdom", "of", "the", "imagination"])
+    iex> Gibran.Counter.longest_tokens(["kingdom", "of", "the", "imagination"])
     [{"imagination", 11}]
   """
   def longest_tokens(list), do: list |> token_lengths |> top_ranked
@@ -99,7 +99,7 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.token_frequency(["the", "prophet", "eye", "of", "the", "prophet"])
+    iex> Gibran.Counter.token_frequency(["the", "prophet", "eye", "of", "the", "prophet"])
     #HashDict<[{"the", 2}, {"eye", 1}, {"of", 1}, {"prophet", 2}]>
   """
   def token_frequency(list) do
@@ -114,7 +114,7 @@ defmodule Oscar.Counter do
 
   ## Examples
 
-    iex> Oscar.Counter.most_frequent_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
+    iex> Gibran.Counter.most_frequent_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
     [{"prophet", 2}, {"the", 2}]
   """
   def most_frequent_tokens(list), do: list |> token_frequency |> top_ranked

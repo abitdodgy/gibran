@@ -1,4 +1,4 @@
-defmodule Oscar.Tokeniser do
+defmodule Gibran.Tokeniser do
   @moduledoc ~S"""
   Tokenises a string into a list.
   """
@@ -9,16 +9,16 @@ defmodule Oscar.Tokeniser do
   Splits a string into a list of tokens with a regular expression. If a regular expression
   is not provided it defaults to `@token_regexp`.
 
-    iex> Oscar.Tokeniser.tokenise("The Prophet")
+    iex> Gibran.Tokeniser.tokenise("The Prophet")
     ["The", "Prophet"]
 
   The default regular expression ignores punctuation, but accounts for apostrophes
   and compound words.
 
-    iex> Oscar.Tokeniser.tokenise("Prophet, The")
+    iex> Gibran.Tokeniser.tokenise("Prophet, The")
     ["Prophet", "The"]
 
-    iex> Oscar.Tokeniser.tokenise("Al-Ajniha al-Mutakassira")
+    iex> Gibran.Tokeniser.tokenise("Al-Ajniha al-Mutakassira")
     ["Al-Ajniha", "al-Mutakassira"]
 
   ### Options
@@ -30,19 +30,19 @@ defmodule Oscar.Tokeniser do
 
   ### Examples
 
-    iex> Oscar.Tokeniser.tokenise("Broken Wings, 1912", pattern: ~r/\,/)
+    iex> Gibran.Tokeniser.tokenise("Broken Wings, 1912", pattern: ~r/\,/)
     ["Broken Wings", " 1912"]
 
-    iex> Oscar.Tokeniser.tokenise("Kingdom of the Imagination", exclude: &(String.length(&1) < 10))
+    iex> Gibran.Tokeniser.tokenise("Kingdom of the Imagination", exclude: &(String.length(&1) < 10))
     ["Imagination"]
 
-    iex> Oscar.Tokeniser.tokenise("Sand and Foam", exclude: ~r/and/)
+    iex> Gibran.Tokeniser.tokenise("Sand and Foam", exclude: ~r/and/)
     ["Foam"]
 
-    iex> Oscar.Tokeniser.tokenise("Eye of The Prophet", exclude: "Eye of")
+    iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: "Eye of")
     ["The", "Prophet"]
 
-    iex> Oscar.Tokeniser.tokenise("Eye of The Prophet", exclude: ["Eye", "of"])
+    iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: ["Eye", "of"])
     ["The", "Prophet"]
   """
   def tokenise(input, opts \\ []) do
