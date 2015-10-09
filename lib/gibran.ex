@@ -44,18 +44,18 @@ defmodule Gibran do
   See `Gibran.Tokeniser.tokenise/2` and `Gibran.Counter` for more information.
   """
   def from_string(input, func) do
-  	Kernel.apply(Counter, func, [tokenise(input)])
+    Kernel.apply(Counter, func, [tokenise(input)])
   end
 
   def from_string(input, func, opts: opts) do
-  	Kernel.apply(Counter, func, [tokenise(input, opts)])
+    Kernel.apply(Counter, func, [tokenise(input, opts)])
   end
 
   def from_string(input, func, fn_opts: fn_opts) do
-  	Kernel.apply(Counter, func, [tokenise(input), fn_opts])
+    Kernel.apply(Counter, func, [tokenise(input), fn_opts])
   end
 
   def from_string(input, func, opts: opts, fn_opts: fn_opts) do
-  	Kernel.apply(Counter, func, [tokenise(input, opts), fn_opts])
+    Kernel.apply(Counter, func, [tokenise(input, opts), fn_opts])
   end
 end
