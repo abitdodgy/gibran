@@ -14,10 +14,11 @@ defmodule Gibran do
   the function to the resulting tokens. The function name must be an `atom`. You can pass a list of
   options to the tokeniser as `opts` and a list of options to the receiving function as `fn_opts`.
 
-  This is meant as a convenience method, and is equivalent to:
+  For example, the following two calls are equivalent:
 
-    Gibran.Tokeniser.tokenise("The Prophet")
-    |> Gibran.Counter.function_name
+    Gibran.from_string("The Prophet", :token_count)
+
+    Gibran.Tokeniser.tokenise("The Prophet") |> Gibran.Counter.token_count
 
   ## Examples
 
@@ -30,7 +31,10 @@ defmodule Gibran do
     iex> Gibran.from_string("Eye of The Prophet", :average_chars_per_token, fn_opts: [precision: 1])
     3.8
 
-    iex> Gibran.from_string("Eye of The Prophet", :average_chars_per_token, opts: [exclude: "of"], fn_opts: [precision: 4])
+    iex> Gibran.from_string("Eye of The Prophet", :average_chars_per_token,\
+      opts: [exclude: "of"],\
+      fn_opts: [precision: 4]\
+    )
     4.3333
 
   To view all available functions see `Gibran.Counter` or type the following into iex:
