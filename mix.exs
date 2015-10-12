@@ -7,7 +7,12 @@ defmodule Gibran.Mixfile do
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     description: "An Elixir natural language processor.",
+     package: [
+       maintainers: ["Mohamad El-Husseini"],
+       licenses: ["MIT"],
+       links: %{github: "https://github.com/abitdodgy/gibran"}]]
   end
 
   # Configuration for the OTP application
