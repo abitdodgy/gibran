@@ -20,7 +20,7 @@ alias Gibran.Counter
 string = "Yesterday is but today's memory, and tomorrow is today's dream."
 
 Tokeniser.tokenise(string, exclude: &String.length(&1) < 4) |> Counter.token_count
-6
+# 6
 ```
 
 Gibran ships with a shortcut method that lets you work directly with strings instead of running them through the tokeniser first.
@@ -31,11 +31,10 @@ Gibran.from_string(
   :token_count,
   opts: [exclude: &String.length(&1) < 4]
 )
-6
+# 6
 ```
 
 The `doctests` contain extensive examples, so take a look there for more detailed information.
-
 
   [1]: https://github.com/abitdodgy/words_counted
   [2]: https://en.wikipedia.org/wiki/Kahlil_Gibran
