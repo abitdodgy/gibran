@@ -9,7 +9,7 @@ defmodule Gibran do
 
   alias Gibran.Counter
 
-  @doc ~S"""
+  @doc ~s"""
   Takes a string and an atom that refers to any function name in `Gibran.Counter`.
   It tokenises the string, then applies the given function to the resulting tokens. The function
   name must be an `atom`. You can pass a list of options to the tokeniser as `opts` and a list
@@ -40,7 +40,7 @@ defmodule Gibran do
 
   The following functions are available.
 
-    #{Gibran.Counter.__info__(:functions)}
+    #{inspect Enum.map(Gibran.Counter.__info__(:functions), fn {name, arity} -> "#{name}/#{arity}" end)}
 
   To view all available functions at anytime see `Gibran.Counter` or type the following into iex:
 
