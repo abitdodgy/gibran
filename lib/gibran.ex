@@ -38,7 +38,11 @@ defmodule Gibran do
     )
     4.3333
 
-  To view all available functions see `Gibran.Counter` or type the following into iex:
+  The following functions are available.
+
+    #{Gibran.Counter.__info__(:functions)}
+
+  To view all available functions at anytime see `Gibran.Counter` or type the following into iex:
 
     Gibran.Counter.__info__(:functions)
 
