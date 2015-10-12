@@ -17,34 +17,27 @@ defmodule Gibran do
 
   For example, the following two calls are equivalent:
 
-    Gibran.from_string("The Prophet", :token_count)
-
-    Gibran.Tokeniser.tokenise("The Prophet") |> Gibran.Counter.token_count
+      Gibran.from_string("The Prophet", :token_count)
+      Gibran.Tokeniser.tokenise("The Prophet") |> Gibran.Counter.token_count
 
   ## Examples
 
-    iex> Gibran.from_string("The Prophet", :token_count)
-    2
-
-    iex> Gibran.from_string("The Prophet", :token_count, opts: [exclude: "the"])
-    1
-
-    iex> Gibran.from_string("Eye of The Prophet", :average_chars_per_token, fn_opts: [precision: 1])
-    3.8
-
-    iex> Gibran.from_string("Eye of The Prophet", :average_chars_per_token,\
-      opts: [exclude: "of"],\
-      fn_opts: [precision: 4]\
-    )
-    4.3333
+      iex> Gibran.from_string("The Prophet", :token_count)
+      2
+      iex> Gibran.from_string("The Prophet", :token_count, opts: [exclude: "the"])
+      1
+      iex> Gibran.from_string("Eye of The Prophet", :average_chars_per_token, fn_opts: [precision: 1])
+      3.8
+      iex> Gibran.from_string("Eye of The Prophet", :average_chars_per_token, opts: [exclude: "of"], fn_opts: [precision: 4])
+      4.3333
 
   The following functions are available.
 
-    #{inspect Enum.map(Gibran.Counter.__info__(:functions), fn {name, arity} -> "#{name}/#{arity}" end)}
+      #{inspect Enum.map(Gibran.Counter.__info__(:functions), fn {name, arity} -> "#{name}/#{arity}" end)}
 
   To view all available functions at anytime see `Gibran.Counter` or type the following into iex:
 
-    Gibran.Counter.__info__(:functions)
+      Gibran.Counter.__info__(:functions)
 
   See `Gibran.Tokeniser.tokenise/2` and `Gibran.Counter` for more information.
   """

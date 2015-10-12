@@ -8,8 +8,8 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.uniq_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
-    ["the", "prophet", "eye", "of"]
+      iex> Gibran.Counter.uniq_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
+      ["the", "prophet", "eye", "of"]
   """
   def uniq_tokens(list), do: Enum.uniq(list)
 
@@ -18,8 +18,8 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.token_count(["the", "madman"])
-    2
+      iex> Gibran.Counter.token_count(["the", "madman"])
+      2
   """
   def token_count(list), do: length(list)
 
@@ -28,8 +28,8 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.uniq_token_count(["the", "prophet", "eye", "of", "the", "prophet"])
-    4
+      iex> Gibran.Counter.uniq_token_count(["the", "prophet", "eye", "of", "the", "prophet"])
+      4
   """
   def uniq_token_count(list), do: list |> uniq_tokens |> length
 
@@ -38,8 +38,8 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.char_count(["the", "wanderer"])
-    11
+      iex> Gibran.Counter.char_count(["the", "wanderer"])
+      11
   """
   def char_count(list) do
     Enum.reduce list, 0, fn (token, acc) ->
@@ -52,12 +52,10 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.average_chars_per_token(["twenty", "drawings"])
-    7.0
-
-    iex> Gibran.Counter.average_chars_per_token(\
-      ["The", "Treasured", "Writings", "of", "Kahlil", "Gibran"], precision: 4)
-    5.6667
+      iex> Gibran.Counter.average_chars_per_token(["twenty", "drawings"])
+      7.0
+      iex> Gibran.Counter.average_chars_per_token(["The", "Treasured", "Writings", "of", "Kahlil", "Gibran"], precision: 4)
+      5.6667
 
   ## Options
 
@@ -74,8 +72,8 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.token_lengths(["voice", "and", "master"])
-    #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
+      iex> Gibran.Counter.token_lengths(["voice", "and", "master"])
+      #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
   """
   def token_lengths(list) do
     list |> Enum.uniq |> Enum.reduce HashDict.new, fn (token, dict) ->
@@ -89,8 +87,8 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.longest_tokens(["kingdom", "of", "the", "imagination"])
-    [{"imagination", 11}]
+      iex> Gibran.Counter.longest_tokens(["kingdom", "of", "the", "imagination"])
+      [{"imagination", 11}]
   """
   def longest_tokens(list), do: list |> token_lengths |> top_ranked
 
@@ -99,8 +97,8 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.token_frequency(["the", "prophet", "eye", "of", "the", "prophet"])
-    #HashDict<[{"the", 2}, {"eye", 1}, {"of", 1}, {"prophet", 2}]>
+      iex> Gibran.Counter.token_frequency(["the", "prophet", "eye", "of", "the", "prophet"])
+      #HashDict<[{"the", 2}, {"eye", 1}, {"of", 1}, {"prophet", 2}]>
   """
   def token_frequency(list) do
     list |> Enum.reduce HashDict.new, fn (token, dict) ->
@@ -114,8 +112,8 @@ defmodule Gibran.Counter do
 
   ## Examples
 
-    iex> Gibran.Counter.most_frequent_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
-    [{"prophet", 2}, {"the", 2}]
+      iex> Gibran.Counter.most_frequent_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
+      [{"prophet", 2}, {"the", 2}]
   """
   def most_frequent_tokens(list), do: list |> token_frequency |> top_ranked
 

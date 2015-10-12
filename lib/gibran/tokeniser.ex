@@ -10,22 +10,22 @@ defmodule Gibran.Tokeniser do
   Takes a string and splits it into a list of tokens using a regular expression. If a regular expression
   is not provided it defaults to `@token_regexp`.
 
-    iex> Gibran.Tokeniser.tokenise("The Prophet")
-    ["the", "prophet"]
+      iex> Gibran.Tokeniser.tokenise("The Prophet")
+      ["the", "prophet"]
 
   The default regular expression ignores punctuation, but accounts for apostrophes
   and compound words.
 
-    iex> Gibran.Tokeniser.tokenise("Prophet, The")
-    ["prophet", "the"]
+      iex> Gibran.Tokeniser.tokenise("Prophet, The")
+      ["prophet", "the"]
 
-    iex> Gibran.Tokeniser.tokenise("Al-Ajniha al-Mutakassira")
-    ["al-ajniha", "al-mutakassira"]
+      iex> Gibran.Tokeniser.tokenise("Al-Ajniha al-Mutakassira")
+      ["al-ajniha", "al-mutakassira"]
 
   The tokeniser will normalize any input by downcasing all tokens.
 
-    iex> Gibran.Tokeniser.tokenise("THE PROPHET")
-    ["the", "prophet"]
+      iex> Gibran.Tokeniser.tokenise("THE PROPHET")
+      ["the", "prophet"]
 
   ### Options
 
@@ -35,20 +35,20 @@ defmodule Gibran.Tokeniser do
 
   ### Examples
 
-    iex> Gibran.Tokeniser.tokenise("Broken Wings, 1912", pattern: ~r/\,/)
-    ["broken wings", " 1912"]
+      iex> Gibran.Tokeniser.tokenise("Broken Wings, 1912", pattern: ~r/\,/)
+      ["broken wings", " 1912"]
 
-    iex> Gibran.Tokeniser.tokenise("Kingdom of the Imagination", exclude: &(String.length(&1) < 10))
-    ["imagination"]
+      iex> Gibran.Tokeniser.tokenise("Kingdom of the Imagination", exclude: &(String.length(&1) < 10))
+      ["imagination"]
 
-    iex> Gibran.Tokeniser.tokenise("Sand and Foam", exclude: ~r/and/)
-    ["foam"]
+      iex> Gibran.Tokeniser.tokenise("Sand and Foam", exclude: ~r/and/)
+      ["foam"]
 
-    iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: "eye of")
-    ["the", "prophet"]
+      iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: "eye of")
+      ["the", "prophet"]
 
-    iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: ["eye", "of"])
-    ["the", "prophet"]
+      iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: ["eye", "of"])
+      ["the", "prophet"]
   """
   def tokenise(input, opts \\ []) do
     pattern = Keyword.get(opts, :pattern, @token_regexp)
@@ -57,7 +57,7 @@ defmodule Gibran.Tokeniser do
     String.split(input, pattern, trim: true) |> normalise |> reject(exclude)
   end
 
-  def normalise(list) do
+  defp normalise(list) do
     Enum.map list, &String.downcase(&1)
   end
 
