@@ -1,6 +1,6 @@
 defmodule Gibran.Tokeniser do
   @moduledoc ~S"""
-  This module containts functions that allow the caller to convert a string into a list
+  This module contains functions that allow the caller to convert a string into a list
   of tokens using different strategies.
   """
 
