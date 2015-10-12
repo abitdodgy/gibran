@@ -13,7 +13,7 @@ Gibran
 
 By default Gibran uses the following regular expression to tokenise strings: `~r/[^\p{L}'-]/u`. However, you can provide your own regular expression through the `pattern` option. You can also combine `pattern` with `exclude` to create some sophisticated tokenisation strategies. The `exclude` option accepts a string, list, function, or a regular expression.
 
-```
+```elixir
 alias Gibran.Tokeniser
 alias Gibran.Counter
 
