@@ -1,8 +1,8 @@
 defmodule Gibran do
   @moduledoc ~S"""
-  Includes shortcut functions that bridge `Gibran.Tokeniser` and `Gibran.Counter`.
+  This module includes shortcut functions that bridge `Gibran.Tokeniser` and `Gibran.Counter`.
   This allows the caller to directly work with strings instead of tokenising the
-  input first.
+  input first before applying any calculations.
   """
 
   import Gibran.Tokeniser
@@ -10,9 +10,10 @@ defmodule Gibran do
   alias Gibran.Counter
 
   @doc ~S"""
-  Takes a string and any function name in `Gibran.Counter`. It tokenises the string, then applies
-  the function to the resulting tokens. The function name must be an `atom`. You can pass a list of
-  options to the tokeniser as `opts` and a list of options to the receiving function as `fn_opts`.
+  Takes a string and an atom that refers to any function name in `Gibran.Counter`.
+  It tokenises the string, then applies the given function to the resulting tokens. The function
+  name must be an `atom`. You can pass a list of options to the tokeniser as `opts` and a list
+  of options to the receiving function as `fn_opts`.
 
   For example, the following two calls are equivalent:
 
@@ -25,7 +26,7 @@ defmodule Gibran do
     iex> Gibran.from_string("The Prophet", :token_count)
     2
 
-    iex> Gibran.from_string("The Prophet", :token_count, opts: [exclude: "The"])
+    iex> Gibran.from_string("The Prophet", :token_count, opts: [exclude: "the"])
     1
 
     iex> Gibran.from_string("Eye of The Prophet", :average_chars_per_token, fn_opts: [precision: 1])

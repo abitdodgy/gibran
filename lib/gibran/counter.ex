@@ -1,6 +1,6 @@
 defmodule Gibran.Counter do
   @moduledoc """
-  A set of functions for analysing lists of tokens.
+  A set of functions that retrieve statistics on a list of tokens.
   """
 
   @doc ~S"""
@@ -14,7 +14,7 @@ defmodule Gibran.Counter do
   def uniq_tokens(list), do: Enum.uniq(list)
 
   @doc ~S"""
-  Counts the number of tokens in a list.
+  Returns an integer of the number of tokens in a list.
 
   ## Examples
 
@@ -24,7 +24,7 @@ defmodule Gibran.Counter do
   def token_count(list), do: length(list)
 
   @doc ~S"""
-  Counts the number of unique tokens in a list.
+  Returns an integer of the number of unique tokens in a list.
 
   ## Examples
 
@@ -34,7 +34,7 @@ defmodule Gibran.Counter do
   def uniq_token_count(list), do: list |> uniq_tokens |> length
 
   @doc ~S"""
-  Counts the number of characters in a list.
+  Returns an integer of the number of characters in a list.
 
   ## Examples
 
