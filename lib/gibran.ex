@@ -20,7 +20,7 @@ defmodule Gibran do
       Gibran.from_string("The Prophet", :token_count)
       Gibran.Tokeniser.tokenise("The Prophet") |> Gibran.Counter.token_count
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.from_string("The Prophet", :token_count)
       2
@@ -38,6 +38,11 @@ defmodule Gibran do
   To view all available functions at anytime see `Gibran.Counter` or type the following into iex:
 
       Gibran.Counter.__info__(:functions)
+
+  ### Options
+
+  - `:opts` A list of options to pass on to the tokeniser. See `Gibran.Tokeniser.tokenise/2`.
+  - `:fn_opts` A list of options to pass onto the recieving function. See `Gibran.Counter`.
 
   See `Gibran.Tokeniser.tokenise/2` and `Gibran.Counter` for more information.
   """

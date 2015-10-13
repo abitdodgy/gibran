@@ -6,7 +6,7 @@ defmodule Gibran.Counter do
   @doc ~S"""
   Given a list of tokens, it returns a unique list.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.uniq_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
       ["the", "prophet", "eye", "of"]
@@ -16,7 +16,7 @@ defmodule Gibran.Counter do
   @doc ~S"""
   Returns an integer of the number of tokens in a list.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.token_count(["the", "madman"])
       2
@@ -26,7 +26,7 @@ defmodule Gibran.Counter do
   @doc ~S"""
   Returns an integer of the number of unique tokens in a list.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.uniq_token_count(["the", "prophet", "eye", "of", "the", "prophet"])
       4
@@ -36,7 +36,7 @@ defmodule Gibran.Counter do
   @doc ~S"""
   Returns an integer of the number of characters in a list.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.char_count(["the", "wanderer"])
       11
@@ -50,14 +50,14 @@ defmodule Gibran.Counter do
   @doc ~S"""
   Returns a float of the average characters per token.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.average_chars_per_token(["twenty", "drawings"])
       7.0
       iex> Gibran.Counter.average_chars_per_token(["The", "Treasured", "Writings", "of", "Kahlil", "Gibran"], precision: 4)
       5.6667
 
-  ## Options
+  ### Options
 
   - `:precision` The maximum total number of decimal digits that will be returned.
   The `precision` must be an integer.
@@ -70,7 +70,7 @@ defmodule Gibran.Counter do
   @doc ~S"""
   Returns an unordered `HashDict` of tokens and their lengths.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.token_lengths(["voice", "and", "master"])
       #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
@@ -85,7 +85,7 @@ defmodule Gibran.Counter do
   Returns a `List` of two-element tuples of the longest tokens.
   Each tuple contains the token and its length respectively.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.longest_tokens(["kingdom", "of", "the", "imagination"])
       [{"imagination", 11}]
@@ -95,7 +95,7 @@ defmodule Gibran.Counter do
   @doc ~S"""
   Returns a `HashDict` of tokens and the number of times they occur.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.token_frequency(["the", "prophet", "eye", "of", "the", "prophet"])
       #HashDict<[{"the", 2}, {"eye", 1}, {"of", 1}, {"prophet", 2}]>
@@ -110,7 +110,7 @@ defmodule Gibran.Counter do
   Returns a `List` of two-element tuples with the highest frequency. Each tuple consists of
   the token and its frequency.
 
-  ## Examples
+  ### Examples
 
       iex> Gibran.Counter.most_frequent_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
       [{"prophet", 2}, {"the", 2}]
