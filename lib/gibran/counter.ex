@@ -42,7 +42,7 @@ defmodule Gibran.Counter do
       11
   """
   def char_count(list) do
-    Enum.reduce list, 0, fn (token, acc) ->
+    Enum.reduce list, 0, fn token, acc ->
       String.length(token) + acc
     end
   end
@@ -59,8 +59,7 @@ defmodule Gibran.Counter do
 
   ## Options
 
-  - `:precision` The maximum total number of decimal digits that will be returned.
-  The `precision` must be an integer.
+  - `:precision` The maximum total number of decimal digits that will be returned. The `precision` must be an integer.
   """
   def average_chars_per_token(list, opts \\ []) do
     precision = Keyword.get(opts, :precision, 2)
@@ -76,7 +75,7 @@ defmodule Gibran.Counter do
       #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
   """
   def token_lengths(list) do
-    list |> Enum.uniq |> Enum.reduce HashDict.new, fn (token, dict) ->
+    list |> Enum.uniq |> Enum.reduce HashDict.new, fn token, dict ->
       HashDict.put dict, token, String.length(token)
     end
   end
@@ -101,7 +100,7 @@ defmodule Gibran.Counter do
       #HashDict<[{"the", 2}, {"eye", 1}, {"of", 1}, {"prophet", 2}]>
   """
   def token_frequency(list) do
-    list |> Enum.reduce HashDict.new, fn (token, dict) ->
+    list |> Enum.reduce HashDict.new, fn token, dict ->
       Dict.update dict, token, 1, &(&1 + 1)
     end
   end
@@ -117,6 +116,27 @@ defmodule Gibran.Counter do
   """
   def most_frequent_tokens(list), do: list |> token_frequency |> top_ranked
 
+  @doc ~s"""
+  Returns a `HashDict` of tokens and their densities as floats.
+
+  ### Examples
+
+      iex> Gibran.Counter.token_density(["the", "prophet", "eye", "of", "the", "prophet"])
+      #HashDict<[{"the", 0.33}, {"eye", 0.17}, {"of", 0.17}, {"prophet", 0.33}]>
+      iex> Gibran.Counter.token_density(["the", "prophet", "eye", "of", "the", "prophet"], 4)
+      #HashDict<[{"the", 0.3333}, {"eye", 0.1667}, {"of", 0.1667}, {"prophet", 0.3333}]>
+
+  ### Options
+
+  - `:precision` The maximum total number of decimal digits that will be returned.
+  The `precision` must be an integer.
+  """
+  def token_density(list, precision \\ 2) do
+    list_size = token_count(list)
+    list |> token_frequency |> Enum.reduce HashDict.new, fn {token, frequency}, dict ->
+      Dict.put dict, token, (frequency / list_size) |> Float.round(precision)
+    end
+  end
 
   defp top_ranked(dict) do
     Enum.group_by(dict, fn {_, x} -> x end) |> Enum.max |> elem(1)
