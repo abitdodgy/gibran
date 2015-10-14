@@ -128,8 +128,7 @@ defmodule Gibran.Counter do
 
   ### Options
 
-  - `:precision` The maximum total number of decimal digits that will be returned.
-  The `precision` must be an integer.
+  - `:precision` The maximum total number of decimal digits that will be included in desnity. The `precision` must be an integer.
   """
   def token_density(list, precision \\ 2) do
     list_size = token_count(list)
