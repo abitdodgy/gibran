@@ -31,7 +31,7 @@ defmodule Gibran.Counter do
       iex> Gibran.Counter.uniq_token_count(["the", "prophet", "eye", "of", "the", "prophet"])
       4
   """
-  def uniq_token_count(list), do: list |> uniq_tokens |> length
+  def uniq_token_count(list), do: uniq_tokens(list) |> length
 
   @doc ~S"""
   Returns an integer of the number of characters in a list.
@@ -54,6 +54,7 @@ defmodule Gibran.Counter do
 
       iex> Gibran.Counter.average_chars_per_token(["twenty", "drawings"])
       7.0
+
       iex> Gibran.Counter.average_chars_per_token(["The", "Treasured", "Writings", "of", "Kahlil", "Gibran"], precision: 4)
       5.6667
 
@@ -75,7 +76,7 @@ defmodule Gibran.Counter do
       #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
   """
   def token_lengths(list) do
-    list |> Enum.uniq |> Enum.reduce HashDict.new, fn token, dict ->
+    Enum.uniq(list) |> Enum.reduce HashDict.new, fn token, dict ->
       HashDict.put dict, token, String.length(token)
     end
   end
@@ -89,7 +90,7 @@ defmodule Gibran.Counter do
       iex> Gibran.Counter.longest_tokens(["kingdom", "of", "the", "imagination"])
       [{"imagination", 11}]
   """
-  def longest_tokens(list), do: list |> token_lengths |> top_ranked
+  def longest_tokens(list), do: token_lengths(list) |> top_ranked
 
   @doc ~S"""
   Returns a `HashDict` of tokens and the number of times they occur.
@@ -100,7 +101,7 @@ defmodule Gibran.Counter do
       #HashDict<[{"the", 2}, {"eye", 1}, {"of", 1}, {"prophet", 2}]>
   """
   def token_frequency(list) do
-    list |> Enum.reduce HashDict.new, fn token, dict ->
+    Enum.reduce list, HashDict.new, fn token, dict ->
       Dict.update dict, token, 1, &(&1 + 1)
     end
   end
@@ -114,7 +115,7 @@ defmodule Gibran.Counter do
       iex> Gibran.Counter.most_frequent_tokens(["the", "prophet", "eye", "of", "the", "prophet"])
       [{"prophet", 2}, {"the", 2}]
   """
-  def most_frequent_tokens(list), do: list |> token_frequency |> top_ranked
+  def most_frequent_tokens(list), do: token_frequency(list) |> top_ranked
 
   @doc ~s"""
   Returns a `HashDict` of tokens and their densities as floats.
@@ -123,6 +124,7 @@ defmodule Gibran.Counter do
 
       iex> Gibran.Counter.token_density(["the", "prophet", "eye", "of", "the", "prophet"])
       #HashDict<[{"the", 0.33}, {"eye", 0.17}, {"of", 0.17}, {"prophet", 0.33}]>
+
       iex> Gibran.Counter.token_density(["the", "prophet", "eye", "of", "the", "prophet"], 4)
       #HashDict<[{"the", 0.3333}, {"eye", 0.1667}, {"of", 0.1667}, {"prophet", 0.3333}]>
 
@@ -132,8 +134,8 @@ defmodule Gibran.Counter do
   """
   def token_density(list, precision \\ 2) do
     list_size = token_count(list)
-    list |> token_frequency |> Enum.reduce HashDict.new, fn {token, frequency}, dict ->
-      Dict.put dict, token, (frequency / list_size) |> Float.round(precision)
+    token_frequency(list) |> Enum.reduce HashDict.new, fn {token, frequency}, dict ->
+      Dict.put dict, token, Float.round(frequency / list_size, precision)
     end
   end
 
