@@ -22,7 +22,7 @@ defmodule Gibran.Tokeniser do
       iex> Gibran.Tokeniser.tokenise("Al-Ajniha al-Mutakassira")
       ["al-ajniha", "al-mutakassira"]
 
-  The tokeniser will normalize any input by downcasing all tokens.
+  The tokeniser will normalize input by downcasing all tokens.
 
       iex> Gibran.Tokeniser.tokenise("THE PROPHET")
       ["the", "prophet"]
