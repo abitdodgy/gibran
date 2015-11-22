@@ -3,7 +3,7 @@ Gibran
 
 > Yesterday is but today's memory, and tomorrow is today's dream.
 
-![Gibran][http://d.gr-assets.com/authors/1353732571p5/6466154.jpg]
+![Gibran](http://d.gr-assets.com/authors/1353732571p5/6466154.jpg)
 
 [Gibran][2] is an Elixir port of [WordsCounted][1], a Ruby natural language processor. I have lofty goals for Gibran, such as:
 
