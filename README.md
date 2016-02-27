@@ -13,18 +13,18 @@ Gibran
 - Porter Stemming algorithm
 - String similarity as [described by Simon White](http://www.catalysoft.com/articles/StrikeAMatch.html)
 
-But for now you'll have to contend with a powerful tokeniser and a utility counter...
+But for now, you'll have to be content with a powerful tokeniser and a utility counter.
 
 - Token count, unique token count, and character count.
 - Average characters per token.
 - `HashDict`s of tokens and their frequencies, lengths, and densities.
 - The longest token(s) and its length.
-- The most frequent token(s) and its frquency.
+- The most frequent token(s) and its frequency.
 - Unique tokens.
 
 ## Usage
 
-Let's start out simple.
+Let's start with something simple.
 
 ```elixir
 alias Gibran.Tokeniser
@@ -38,23 +38,23 @@ Tokeniser.tokenise(str) |> Counter.uniq_token_count
 # => 8
 ```
 
-By default Gibran uses the following regular expression to tokenise strings: `~r/[^\p{L}'-]/u`. However, you can provide your own regular expression through the `pattern` option. You can also combine `pattern` with `exclude` to create some sophisticated tokenisation strategies. The `exclude` option accepts a string, list, function, or a regular expression.
+By default Gibran uses the following regular expression to tokenise strings: `~r/[^\p{L}'-]/u`. However, you can provide your own regular expression through the `pattern` option. You can also combine `pattern` with `exclude` to create sophisticated tokenisation strategies. The `exclude` option accepts a string, list, function, or a regular expression.
 
 ```elixir
 Tokeniser.tokenise(string, exclude: &String.length(&1) < 4) |> Counter.token_count
 # => 6
 ```
 
-Gibran ships with a shortcut method that lets you work directly with strings instead of running them through the tokeniser first.
+Gibran has a shortcut to work with strings directly instead of running them through the tokeniser first.
 
 ```elixir
 Gibran.from_string(str, :token_count, opts: [exclude: &String.length(&1) < 4])
 # => 6
 ```
 
-Gibran normalises its input before applying transformations. This ensures that differences in character-casing do not impact results.
+Gibran normalises input before applying transformations to avoid inconsistencies that can arise from character-casing.
 
-The `doctests` contain extensive usage examples. Please take a look there for more detailed information.
+The `doctests` contain extensive usage examples. Please take a look there for more details.
 
   [1]: https://github.com/abitdodgy/words_counted
   [2]: https://en.wikipedia.org/wiki/Kahlil_Gibran
