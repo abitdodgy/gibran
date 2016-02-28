@@ -31,27 +31,39 @@ defmodule Gibran.Tokeniser do
 
   - `:pattern` A regular expression to tokenise the input. It defaults to `@token_regexp`.
   - `:exclude` A filter that is applied to the string after it has been tokenised. It can be
-  a function, string, list, or regular expression. This is useful to exclude tokens from the final list.
+  a function, a string, a regular expression, or a list of any combination of those types.
 
   ### Examples
+
+  Using `pattern`
 
       iex> Gibran.Tokeniser.tokenise("Broken Wings, 1912", pattern: ~r/\,/)
       ["broken wings", " 1912"]
 
+  Using `exclude` with a function.
+
       iex> Gibran.Tokeniser.tokenise("Kingdom of the Imagination", exclude: &(String.length(&1) < 10))
       ["imagination"]
+
+  Using `exclude` with a regular expression.
 
       iex> Gibran.Tokeniser.tokenise("Sand and Foam", exclude: ~r/and/)
       ["foam"]
 
+  Using `exclude` with a string.
+
       iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: "eye of")
       ["the", "prophet"]
 
-      iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: ["eye", "of"])
-      ["the", "prophet"]
+  Using `exclude` with a list of a combination of types.
 
       iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: ["eye", &(String.ends_with?(&1, "he")), ~r/of/])
       ["prophet"]
+
+  Using `exclude` with a list.
+
+      iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: ["eye", "of"])
+      ["the", "prophet"]
   """
   def tokenise(input, opts \\ []) do
     pattern = Keyword.get(opts, :pattern, @token_regexp)
