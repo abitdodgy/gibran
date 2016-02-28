@@ -49,12 +49,21 @@ defmodule Gibran.Tokeniser do
 
       iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: ["eye", "of"])
       ["the", "prophet"]
+
+      iex> Gibran.Tokeniser.tokenise("Eye of The Prophet", exclude: ["eye", &(String.ends_with?(&1, "he")), ~r/of/])
+      ["prophet"]
   """
   def tokenise(input, opts \\ []) do
     pattern = Keyword.get(opts, :pattern, @token_regexp)
     exclude = Keyword.get(opts, :exclude)
 
-    String.split(input, pattern, trim: true) |> normalise |> reject(exclude)
+    tokens = String.split(input, pattern, trim: true) |> normalise
+
+    if exclude do
+      reject(tokens, exclude)
+    else
+      tokens
+    end
   end
 
   defp normalise(list) do
@@ -62,17 +71,29 @@ defmodule Gibran.Tokeniser do
   end
 
   defp reject(list, filter) do
-    cond do
-      is_function(filter) ->
-        Enum.reject(list, filter)
-      Regex.regex?(filter) ->
-        Enum.reject list, &Regex.match?(filter, &1)
-      is_list(filter) ->
-        Enum.reject list, &Enum.member?(filter, &1)
-      is_binary(filter) ->
-        reject list, String.split(filter, " ", trim: true)
-      true ->
-        list
-    end
+    Enum.reject list, &filter?(filter, &1)
+  end
+
+  defp filter?(filter, token) when is_list(filter) do
+    Enum.any? filter, &filter?(&1, token)
+  end
+
+  defp filter?(filter, token) when is_binary(filter) do
+    excluded = String.split(filter, " ", trim: true)
+    Enum.member?(excluded, token)
+  end
+
+  defp filter?(filter, token) when is_function(filter) do
+    filter.(token)
+  end
+
+  defp filter?(%Regex{} = filter, token) do
+    Regex.match?(filter, token)
+  end
+
+  defp filter?(_, _) do
+    raise ArgumentError, """
+      Filter must be a function, binary, regex, or a list of any combination of those types.
+    """
   end
 end
