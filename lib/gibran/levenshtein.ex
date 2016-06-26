@@ -1,4 +1,9 @@
 defmodule Gibran.Levenshtein do
+	@moduledoc ~S"""
+	This module contains functions for finding the difference between two sequences of strings.
+	The Levenshtein distance between two words is the minimum number of single-character edits required to change one word into the other.
+	"""
+	
 	@spec distance(list | binary,  list | binary) :: integer
 	def distance(string, string), do: 0
 
