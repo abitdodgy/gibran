@@ -3,7 +3,32 @@ defmodule Gibran.Levenshtein do
 	This module contains functions for finding the difference between two sequences of strings.
 	The Levenshtein distance between two words is the minimum number of single-character edits required to change one word into the other.
 	"""
-	
+
+	@doc ~S"""
+	Accepts two strings and returns an integer as the Levenshtein distance. 
+
+	### Examples
+
+	Ordinary use:
+
+      iex(1)> Gibran.Levenshtein.distance("kitten", "sitting")
+      3
+
+	The Levenshtein distance for the same string is 0.
+
+      iex(2)> Gibran.Levenshtein.distance("snail", "snail")
+      0
+
+	The Levenshtein distance is case-sensitive.
+
+      iex(3)> Gibran.Levenshtein.distance("HOUSEBOAT", "houseboat")
+      9
+
+	The function can accept charlists as well as strings.
+
+      iex(4)> Gibran.Levenshtein.distance('jogging', 'logger')
+      4
+	"""
 	@spec distance(list | binary,  list | binary) :: integer
 	def distance(string, string), do: 0
 
