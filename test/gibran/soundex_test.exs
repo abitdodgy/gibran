@@ -65,4 +65,11 @@ defmodule Gibran.SoundexTest do
     assert  diacritic == latinized
   end
 
+  test "encode function treats charlists the same as strings" do
+    charlist = Gibran.Soundex.encode 'Asamov'
+    string = Gibran.Soundex.encode "Asamov"
+
+    assert charlist == string
+  end
+
 end
