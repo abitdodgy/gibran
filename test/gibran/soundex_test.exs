@@ -56,4 +56,13 @@ defmodule Gibran.SoundexTest do
     assert ashcroft == ashcraft
   end
 
+  test ~S"""
+    names with diacritic marks are treated as non-accented latin characters
+    """
+  do
+    diacritic = Gibran.Soundex.encode "Núñez"
+    latinized = Gibran.Soundex.encode "Nunez"
+    assert  diacritic == latinized
+  end
+
 end
