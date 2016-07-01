@@ -12,6 +12,7 @@ defmodule Gibran.Soundex do
 
   def encode(string) do
     string
+      |> String.normalize(:nfd)
       |> String.upcase
       |> String.codepoints
       |> do_encode
