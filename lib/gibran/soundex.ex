@@ -1,4 +1,7 @@
 defmodule Gibran.Soundex do
+  @moduledoc """
+  
+  """
   @scores %{"B" => 1, "F" => 1, "P" => 1,
             "V" => 1, "C" => 2, "G" => 2,
             "J" => 2, "K" => 2, "Q" => 2, 
@@ -9,6 +12,12 @@ defmodule Gibran.Soundex do
             "I" => "I", "O" => "O", 
             "U" => "U"}
   @padding [0, 0, 0]
+
+  def encode(charlist) when is_list(charlist) do
+    charlist
+      |> List.to_string
+      |> encode
+  end
 
   def encode(string) do
     string
@@ -82,7 +91,7 @@ defmodule Gibran.Soundex do
     point == @scores[char]
   end
 
-  defp convert_glyph(char) do
-    Map.get(@scores, char)
+  defp convert_glyph(glyph) do
+    Map.get(@scores, glyph)
   end
 end
