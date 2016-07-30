@@ -3,7 +3,7 @@ defmodule Gibran.Mixfile do
 
   def project do
     [app: :gibran,
-     version: "0.0.2",
+     version: "0.0.4",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -48,6 +48,7 @@ defmodule Gibran.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [{:ex_doc, "~> 0.10", only: :dev},
-     {:earmark, "~> 0.1", only: :dev}]
+     {:earmark, "~> 0.1", only: :dev},
+     {:dialyxir, "~>0.3", only: :dev}]
   end
 end
