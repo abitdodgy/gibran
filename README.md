@@ -8,7 +8,6 @@ Gibran
 [Gibran][2] is an Elixir port of [WordsCounted][1], a Ruby natural language processor. I have lofty goals for Gibran, such as:
 
 - Metaphone phonetic coding system
-- Levenshtein distance algorithm
 - Soundex algorithm
 - Porter Stemming algorithm
 - String similarity as [described by Simon White](http://www.catalysoft.com/articles/StrikeAMatch.html)
@@ -21,6 +20,7 @@ But for now, you'll have to be content with a powerful tokeniser and a utility c
 - The longest token(s) and its length.
 - The most frequent token(s) and its frequency.
 - Unique tokens.
+- Levenshtein distance algorithm
 
 ## Usage
 
@@ -72,8 +72,30 @@ Gibran has a shortcut to work with strings directly instead of running them thro
 Gibran.from_string(str, :token_count, opts: [exclude: &String.length(&1) < 4])
 # => 6
 ```
-
 Gibran normalises input before applying transformations to avoid inconsistencies that can arise from character-casing.
+
+### Levenshtein distance
+Ordinary use:
+```elixir
+iex(1)> Gibran.Levenshtein.distance("kitten", "sitting")
+3
+ ```
+ The Levenshtein distance for the same string is 0.
+ ```elixir
+iex(2)> Gibran.Levenshtein.distance("snail", "snail")
+0
+```
+ The Levenshtein distance is case-sensitive.
+
+```elixir 
+iex(3)> Gibran.Levenshtein.distance("HOUSEBOAT", "houseboat")
+9
+```
+The function can accept charlists as well as strings.
+```elixir
+ iex(4)> Gibran.Levenshtein.distance('jogging', 'logger')
+ 4
+ ```
 
 The `doctests` contain extensive usage examples. Please take a look there for more details.
 
