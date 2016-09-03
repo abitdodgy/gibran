@@ -3,8 +3,8 @@ defmodule Gibran.Mixfile do
 
   def project do
     [app: :gibran,
-     version: "0.0.2",
-     elixir: "~> 1.0",
+     version: "0.1.0",
+     elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps,
