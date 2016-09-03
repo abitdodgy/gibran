@@ -76,9 +76,9 @@ defmodule Gibran.Counter do
       #HashDict<[{"and", 3}, {"master", 6}, {"voice", 5}]>
   """
   def token_lengths(list) do
-    Enum.uniq(list) |> Enum.reduce HashDict.new, fn token, dict ->
+    Enum.uniq(list) |> Enum.reduce(HashDict.new, fn token, dict ->
       HashDict.put dict, token, String.length(token)
-    end
+    end)
   end
 
   @doc ~S"""
@@ -134,9 +134,9 @@ defmodule Gibran.Counter do
   """
   def token_density(list, precision \\ 2) do
     list_size = token_count(list)
-    token_frequency(list) |> Enum.reduce HashDict.new, fn {token, frequency}, dict ->
+    token_frequency(list) |> Enum.reduce(HashDict.new, fn {token, frequency}, dict ->
       Dict.put dict, token, Float.round(frequency / list_size, precision)
-    end
+    end)
   end
 
   defp top_ranked(dict) do
