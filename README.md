@@ -17,7 +17,7 @@ But for now, you'll have to be content with a powerful tokeniser and a utility c
 
 - Token count, unique token count, and character count.
 - Average characters per token.
-- `HashDict`s of tokens and their frequencies, lengths, and densities.
+- `Map`s of tokens and their frequencies, lengths, and densities.
 - The longest token(s) and its length.
 - The most frequent token(s) and its frequency.
 - Unique tokens.
