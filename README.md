@@ -5,7 +5,7 @@ Gibran
 
 ![Gibran](http://d.gr-assets.com/authors/1353732571p5/6466154.jpg)
 
-[Gibran][2] is an Elixir natural language processor. Lofty goals for Gibran: include
+[Gibran][2] is an Elixir natural language processor. Lofty goals for Gibran include:
 
 - Metaphone phonetic coding system
 - Soundex algorithm
